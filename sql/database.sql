@@ -3,7 +3,7 @@
 -- creazione del DB
 DROP DATABASE IF EXISTS gestione_spese;
 CREATE DATABASE gestione_spese;
-USE gestione_spese
+USE gestione_spese;
 
 -- Tabella: categorie 
 
@@ -13,7 +13,7 @@ CREATE TABLE categoria (
 
     PRIMARY KEY (id),
     UNIQUE(nome),
-    CHECK (nome <> ""),
+    CHECK (nome <> "")
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabella spese
@@ -23,13 +23,13 @@ CREATE TABLE spese(
     data DATE NOT NULL,
     importo DECIMAL(10,2) NOT NULL,
     categoria_id INT NOT NULL,
-    descrizione VARCHAT(255),
+    descrizione VARCHAR(255),
 
     PRIMARY KEY(id),
     FOREIGN KEY (categoria_id) REFERENCES categoria(id)
         ON DELETE RESTRICT
-        ON UPDATE CASCATE,
-    CHECK(importo >= 0),
+        ON UPDATE CASCADE,
+    CHECK(importo >= 0)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabella budget
@@ -46,7 +46,7 @@ CREATE TABLE budget(
         ON UPDATE CASCADE,
         UNIQUE(mese, categoria_id),
         CHECK(importo_budget > 0),
-        CHECK(mese REGEXP'^[0-9]{4}-[0-9]{2}$'),// imponiamo anno mese 
+        CHECK(mese REGEXP'^[0-9]{4}-[0-9]{2}$') -- imponiamo anno mese
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
