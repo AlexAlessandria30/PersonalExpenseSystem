@@ -38,7 +38,7 @@ MYSQL* connectDatabase(){
             return NULL;
     }
     
-    return NULL;
+    return conn;
 
 }
 
@@ -84,7 +84,7 @@ void gestioneCategorie(MYSQL* conn){
 
 
         // verifica se la categoria esiste
-        string queryCheck = "SELECT id FROM categorie WHERE nome = '" + nomeCategoria + "'";
+        string queryCheck = "SELECT id FROM categoria WHERE nome = '" + nomeCategoria + "'";
         if (mysql_query(conn, queryCheck.c_str())) {
 
             cerr << "Errore query: " << mysql_error(conn) << "\n";
@@ -105,7 +105,7 @@ void gestioneCategorie(MYSQL* conn){
 
 
         //inserimento  categoria
-        string queryInsert = "INSERT INTO categorie (nome) VALUES ('" + nomeCategoria + "')";
+        string queryInsert = "INSERT INTO categoria (nome) VALUES ('" + nomeCategoria + "')";
         if (mysql_query(conn, queryInsert.c_str())) {
 
             cerr << "Errore inserimento: " << mysql_error(conn) << "\n";
@@ -123,7 +123,7 @@ void gestioneCategorie(MYSQL* conn){
     }else if( scelta == 2 ){
 
         // visualizzazione categoria
-        string query = "SELECT id, nome FROM categorie ORDER BY nome";
+        string query = "SELECT id, nome FROM categoria ORDER BY nome";
         if (mysql_query(conn, query.c_str())) {
 
             cerr << "Errore query: " << mysql_error(conn) << "\n";
@@ -200,7 +200,7 @@ void inserisciSpesa(MYSQL* conn){
     getline(cin, descrizione);
 
     // verifica se essite la categoria e prendi ID
-    string queryCategoria = "SELECT id FROM categorie WHERE nome = '" + nomeCategoria + "'";
+    string queryCategoria = "SELECT id FROM categora WHERE nome = '" + nomeCategoria + "'";
 
     if (mysql_query(conn, queryCategoria.c_str())) {
 
@@ -280,7 +280,7 @@ void definisciBudget(MYSQL* conn){
 
 
     // verifica se esiste la categoria e prendi ID
-    string queryCategoria = "SELECT id FROM categorie WHERE nome = '" + nomeCategoria + "'";
+    string queryCategoria = "SELECT id FROM categoria WHERE nome = '" + nomeCategoria + "'";
     if (mysql_query(conn, queryCategoria.c_str())) {
     
         cerr << "Errore query: " << mysql_error(conn) << "\n";
@@ -367,7 +367,7 @@ void reportTotalePerCategoria(MYSQL* conn) {
 
     string query =
         "SELECT c.nome, COALESCE(SUM(s.importo), 0) as totale "
-        "FROM categorie c "
+        "FROM categoria c "
         "LEFT JOIN spese s ON c.id = s.categoria_id "
         "GROUP BY c.id, c.nome "
         "ORDER BY totale DESC";
@@ -413,12 +413,11 @@ void reportSpeseVsBudget(MYSQL* conn) {
         "    b.importo_budget, "
         "    COALESCE(SUM(s.importo), 0) as totale_speso "
         "FROM budget b "
-        "JOIN categorie c ON b.categoria_id = c.id "
+        "JOIN categoria c ON b.categoria_id = c.id "
         "LEFT JOIN spese s ON c.id = s.categoria_id "
         "    AND DATE_FORMAT(s.data, '%Y-%m') = b.mese "
         "GROUP BY b.mese, c.nome, b.importo_budget "
-        "ORDER BY b.mese DESC, c.nome";
-
+        "ORDER BY b.mese DESC, c.nome";a
     if (mysql_query(conn, query.c_str())) {
       
         cerr << "Errore query: " << mysql_error(conn) << "\n";
@@ -468,7 +467,7 @@ void reportElencoSpese(MYSQL* conn) {
     string query =
         "SELECT s.data, c.nome, s.importo, s.descrizione "
         "FROM spese s "
-        "JOIN categorie c ON s.categoria_id = c.id "
+        "JOIN categoria c ON s.categoria_id = c.id "
         "ORDER BY s.data DESC";
 
     if (mysql_query(conn, query.c_str())) {
