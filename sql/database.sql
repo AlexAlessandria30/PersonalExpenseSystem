@@ -29,7 +29,7 @@ CREATE TABLE spese(
     FOREIGN KEY (categoria_id) REFERENCES categoria(id)
         ON DELETE RESTRICT
         ON UPDATE CASCATE,
-    CHECK(importo >= 0)
+    CHECK(importo >= 0),
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabella budget
@@ -43,7 +43,7 @@ CREATE TABLE budget(
     PRIMARY KEY(id),
     FOREIGN KEY (categoria_id) REFERENCES categoria(id)
         ON DELETE RESTRICT
-        ON UPDATE CASCATE,
+        ON UPDATE CASCADE,
         UNIQUE(mese, categoria_id),
         CHECK(importo_budget > 0),
         CHECK(mese REGEXP'^[0-9]{4}-[0-9]{2}$'),// imponiamo anno mese 
