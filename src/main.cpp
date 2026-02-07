@@ -200,7 +200,7 @@ void inserisciSpesa(MYSQL* conn){
     getline(cin, descrizione);
 
     // verifica se essite la categoria e prendi ID
-    string queryCategoria = "SELECT id FROM categora WHERE nome = '" + nomeCategoria + "'";
+    string queryCategoria = "SELECT id FROM categoria WHERE nome = '" + nomeCategoria + "'";
 
     if (mysql_query(conn, queryCategoria.c_str())) {
 
@@ -417,7 +417,7 @@ void reportSpeseVsBudget(MYSQL* conn) {
         "LEFT JOIN spese s ON c.id = s.categoria_id "
         "    AND DATE_FORMAT(s.data, '%Y-%m') = b.mese "
         "GROUP BY b.mese, c.nome, b.importo_budget "
-        "ORDER BY b.mese DESC, c.nome";a
+        "ORDER BY b.mese DESC, c.nome";
     if (mysql_query(conn, query.c_str())) {
       
         cerr << "Errore query: " << mysql_error(conn) << "\n";
