@@ -5,7 +5,7 @@ DROP DATABASE IF EXISTS gestione_spese;
 CREATE DATABASE gestione_spese;
 USE gestione_spese;
 
--- Tabella: categorie 
+-- Tabella: categoria 
 
 CREATE TABLE categoria (
     id INT AUTO_INCREMENT, 
@@ -52,7 +52,7 @@ CREATE TABLE budget(
 
 
 -- Inserimento valori
-INSERT INTO categorie (nome) VALUES
+INSERT INTO categoria (nome) VALUES
     ('Alimentari'),
     ('Trasporti'),
     ('Intrattenimento'),
@@ -112,11 +112,11 @@ SELECT * FROM categoria;
 -- Verifica spese inserite
 SELECT s.id, s.data, c.nome AS categoria, s.importo, s.descrizione
 FROM spese s
-JOIN categorie c ON s.categoria_id = c.id
+JOIN categoria c ON s.categoria_id = c.id
 ORDER BY s.data DESC;
 
 -- Verifica budget inseriti
 SELECT b.mese, c.nome AS categoria, b.importo_budget
 FROM budget b
-JOIN categorie c ON b.categoria_id = c.id
+JOIN categoria c ON b.categoria_id = c.id
 ORDER BY b.mese, c.nome;
