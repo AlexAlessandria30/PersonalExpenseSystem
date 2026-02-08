@@ -5,7 +5,7 @@ DROP DATABASE IF EXISTS gestione_spese;
 CREATE DATABASE gestione_spese;
 USE gestione_spese;
 
--- Tabella: categoria 
+-- Tabella: categoria.
 
 CREATE TABLE categoria (
     id INT AUTO_INCREMENT, 

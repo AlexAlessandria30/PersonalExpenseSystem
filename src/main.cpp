@@ -405,6 +405,7 @@ void reportTotalePerCategoria(MYSQL* conn) {
 // Report spese mensile vs Budget 
 void reportSpeseVsBudget(MYSQL* conn) {
     cout << "\n--- Spese mensili VS Budget ---\n";
+    
 
     string query =
         "SELECT "
